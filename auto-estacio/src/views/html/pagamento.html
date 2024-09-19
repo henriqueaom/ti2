@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento</title>
+    <style>
+        /* Estilização básica para o menu */
+        nav {
+            background-color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            background-color: #e40303;
+        }
+
+        /* Remove o espaço extra no último item à esquerda */
+        .left-menu li:last-child {
+            margin-right: 0;
+        }
+
+        /* Remove o espaço extra no último item à direita */
+        .right-menu li:last-child {
+            margin-right: 0;
+        }
+
+        .container {
+            background-color: #000;
+            color: white;
+            padding: 20px;
+            width: 80%;
+            margin: 20px auto;
+            /* Centraliza horizontalmente */
+            border-radius: 10px;
+            /* Bordas arredondadas */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Sombra para dar destaque */
+            font-family: 'Arial', sans-serif;
+            /* Altera a fonte para Arial */
+            font-size: 18px;
+            /* Aumenta o tamanho da fonte */
+        }
+
+        body {
+            background-color: #e64b4b;
+        }
+
+        .contact-info {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="submit"] {
+            padding: 10px;
+            width: 100%;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #e40303;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #d00202;
+        }
+
+        .result {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul class="left-menu">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="pagamento.html">Pagamento</a></li>
+            <li><a href="CadastrarVeiculo.html">Cadastrar Veículo</a></li>
+        </ul>
+        <ul class="right-menu">
+            <li><a href="PaginaDoAdministrador.html">ADM</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="Cadastrar.html">Cadastrar</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Pagamento</h1>
+        
+        <!-- Formulário para calcular o valor -->
+        <form id="calcular-form">
+            <div class="form-group">
+                <label for="placa">Digite a placa do veículo:</label>
+                <input type="text" id="placa" name="placa" placeholder="Ex: ABC1234" required>
+            </div>
+            <input type="submit" value="Calcular Valor">
+        </form>
+
+        <div id="resultado" class="result" style="display: none;"></div>
+
+        <!-- Formulário para efetuar o pagamento -->
+        <form id="pagamento-form" style="display: none;">
+            <div class="form-group">
+                <input type="submit" value="Efetuar Pagamento">
+            </div>
+        </form>
+    </div>
+
+    <div class="contact-info">
+        <p>Entre em contato: Telefone: (11) 1234-5678 | Email: contato@autoestacionamento.com</p>
+    </div>
+
+    <script>
+        // Função para calcular o valor
+        document.getElementById("calcular-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const placa = document.getElementById("placa").value;
+
+            fetch("http://localhost:4568/calcularValor", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "placa=" + encodeURIComponent(placa)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultadoDiv = document.getElementById("resultado");
+
+                if (data.status === "success") {
+                    resultadoDiv.style.display = "block";
+                    resultadoDiv.innerHTML = "O valor a ser pago para o veículo com placa " + placa + " é R$ " + data.valor;
+                    
+                    // Mostrar o formulário de pagamento
+                    document.getElementById("pagamento-form").style.display = "block";
+                } else {
+                    resultadoDiv.style.display = "block";
+                    resultadoDiv.innerHTML = "Erro: " + data.message;
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao calcular valor:", error);
+            });
+        });
+
+        // Função para efetuar o pagamento
+        document.getElementById("pagamento-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const placa = document.getElementById("placa").value;
+
+            fetch("http://localhost:4568/pagamento", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "placa=" + encodeURIComponent(placa)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultadoDiv = document.getElementById("resultado");
+
+                if (data.status === "success") {
+                    resultadoDiv.innerHTML = "Pagamento efetuado com sucesso!";
+                } else {
+                    resultadoDiv.innerHTML = "Erro ao efetuar pagamento: " + data.message;
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao efetuar pagamento:", error);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

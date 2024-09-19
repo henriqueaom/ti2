@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Estacionamento</title>
+    <style>
+        /* Estilização básica para o menu */
+        nav {
+            background-color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            background-color: #e40303;
+        }
+
+        /* Remove o espaço extra no último item à esquerda */
+        .left-menu li:last-child {
+            margin-right: 0;
+        }
+
+        /* Remove o espaço extra no último item à direita */
+        .right-menu li:last-child {
+            margin-right: 0;
+        }
+
+        .container {
+            background-color: #000;
+            color: white;
+            padding: 20px;
+            width: 80%;
+            margin: 20px auto;
+            /* Centraliza horizontalmente */
+            border-radius: 10px;
+            /* Bordas arredondadas */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Sombra para dar destaque */
+            font-family: 'Arial', sans-serif;
+            /* Altera a fonte para Arial */
+            font-size: 18px;
+            /* Aumenta o tamanho da fonte */
+
+        }
+
+        body {
+            background-color: #e64b4b;
+        }
+
+        .contact-info {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul class="left-menu">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="pagamento.html">pagamento</a></li>
+            <li><a href="CadastrarVeiculo.html">CadastrarVeiculo</a></li>
+        </ul>
+        <ul class="right-menu">
+            <li><a href="PaginaDoAministrador.html">ADM</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="Cadastrar.html">Cadastrar</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Auto-Estacionamento!</h1>
+        <p>Seja Bem-vindo</p>
+        <p>cansado de pegar cartão de estacionamento? cansado de sempre achar que perdeu o cartão? acabaou os seus
+            problemas, com essa nova tecnologia voce vai poder pagar ate mesmo
+            do seu celular, pratico seguro e barato </p>
+    </div>
+
+    <div class="container">
+        <h1>Quem somos?</h1>
+        <p>Quem somos? Somos um grupo de Estudantes da PUC Minas derivado da matéria Trabalho Interdisciplinar 2, formado por 5 membros.</p>
+        <p>O projeto desenvolvido consiste em um sistema de estacionamento automatizado, projetado para simplificar a experiência dos usuários 
+            e otimizar a gestão de vagas e pagamentos. O software utiliza uma API avançada para leitura automática das placas dos
+            veículos, eliminando a necessidade de interação manual durante o processo de entrada e saída do estacionamento.</p>
+
+        <h2>Funcionamento</h2>
+        <p><strong>Leitura de Placas:</strong><br>
+            Ao entrar no estacionamento, as câmeras instaladas capturam a imagem da placa do veículo. Essas imagens são processadas pela API, que extrai e identifica os caracteres da placa, registrando automaticamente a entrada do veículo no sistema.
+        </p>
+        <p><strong>Registro e Monitoramento:</strong><br>
+            O sistema armazena os dados da placa, juntamente com a hora de entrada, em um banco de dados seguro. Esse registro permite o monitoramento em tempo real de todos os veículos presentes no estacionamento, oferecendo uma visão detalhada para os administradores.
+        </p>
+        <p><strong>Pagamentos Automatizados:</strong><br>
+            Quando o usuário decide deixar o estacionamento, a mesma API realiza uma nova leitura da placa para registrar a hora de saída. Com base no tempo total de permanência, o sistema calcula automaticamente o valor a ser pago.
+            O pagamento é realizado de forma totalmente automatizada, vinculando a placa do veículo aos dados de pagamento previamente cadastrados pelo usuário. Isso pode ser feito por meio de métodos como cartão de crédito ou débito, associados à placa do veículo no sistema.
+        </p>
+        <p><strong>Benefícios do Sistema:</strong><br>
+            <strong>Eficiência:</strong> Reduz o tempo de espera e melhora o fluxo de veículos, permitindo uma experiência mais rápida e sem fricções.<br>
+            <strong>Segurança:</strong> O uso da API para leitura de placas minimiza erros humanos e fraudes, garantindo que somente veículos autorizados utilizem o estacionamento.<br>
+            <strong>Comodidade:</strong> Usuários não precisam se preocupar com tickets ou pagamentos manuais, pois todo o processo é automatizado e vinculado à placa do veículo.
+        </p>
+    </div>
+
+    <div class="contact-info">
+        <p>Entre em contato: Telefone: (11) 1234-5678 | Email: contato@autoestacionamento.com</p>
+    </div>
+</body>
+
+</html>

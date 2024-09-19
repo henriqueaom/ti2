@@ -21,14 +21,14 @@ public class ProdutoDAO {
 	
 	 public String conectar() {
 		    // Driver JDBC do PostgreSQL
-		    String driverName = "org.postgresql.Driver";
+		    String driverName = "com.mysql.cj.jdbc.Driver";
 		    String serverName = "localhost";
-		    String databaseName = "exercicio2";
-		    int porta = 5432;
-		    String url = "jdbc:postgresql://" + serverName + ":" + porta + "/" + databaseName;
+		    String databaseName = "auto_estacio";
+            int porta = 3306;
+		    String url = "jdbc:mysql://" + serverName + ":" + porta + "/" + databaseName;
 
 		    // Adicionando credenciais para conexão
-		    String user = "postgres";
+		    String user = "root";
 		    String password = "ti2cc";
 
 		    try {

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Administrador</title>
+    <style>
+        /* Estilização básica para o menu superior */
+        nav {
+            background-color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            background-color: #e40303;
+        }
+
+        /* Estilo da barra lateral */
+        .sidebar {
+            height: 100%;
+            width: 60px; /* Largura inicial da sidebar */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 20px;
+            z-index: 999;
+            margin-top: 50px; /* Espaço para o menu superior */
+        }
+
+        .sidebar.expanded {
+            width: 250px; /* Largura quando expandida */
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            display: none;
+        }
+
+        .sidebar.expanded .closebtn {
+            display: block;
+        }
+
+        .sidebar .togglebtn {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .sidebar.expanded .togglebtn {
+            display: none;
+        }
+
+        .sidebar .user-info {
+            display: none;
+            margin: 20px 0;
+            font-size: 18px;
+            color: white;
+        }
+
+        .sidebar.expanded .user-info {
+            display: block;
+        }
+
+        .logout-button {
+            padding: 10px 20px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .logout-button:hover {
+            background-color: #777;
+        }
+
+        /* Estilo do conteúdo principal */
+        .main-content {
+            margin-left: 60px; /* Espaço para a sidebar */
+            padding: 20px;
+            transition: margin-left 0.5s;
+            margin-top: 60px; /* Espaço para o menu superior */
+        }
+
+        .sidebar.expanded + .main-content {
+            margin-left: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Menu Superior -->
+    <nav>
+        <ul class="left-menu">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="pagamento.html">Pagamento</a></li>
+            <li><a href="CadastrarVeiculo.html">CadastrarVeiculo</a></li>
+        </ul>
+        <ul class="right-menu">
+            <li><a href="PaginaDoAministrador.html">ADM</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="Cadastrar.html">Cadastrar</a></li>
+        </ul>
+    </nav>
+
+    <!-- Barra Lateral -->
+    <div class="sidebar" id="mySidebar">
+        <span class="togglebtn" onclick="toggleSidebar()">&#9776;</span>
+        <span class="closebtn" onclick="toggleSidebar()">&times;</span>
+        <div class="user-info" id="userInfo">
+            <p id="userName"></p>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+        <h1>Bem-vindo à Página do Administrador</h1>
+
+        <div id="div">
+
+        <h2>cadastrar veiculos</h2>
+
+
+        <form id="cadastrarveiculo">
+            <label for="placa">Placa</label>
+            <input type="text" name="placa" id="placa">
+            <button type="submit">enviar</button>
+        </form>
+
+        <h2>Deletar veiculo</h2>
+        </form>
+        <form id="deletar">
+            <label for="placa">Placa</label>
+            <input type="text" name="placa" id="placa">
+            <button type="submit">enviar</button>
+        </form>
+
+
+        <h2>Listar veiculos</h2>
+        <form id="listar">
+            <button type="submit">Listar</button>
+        </form>
+    </div>
+
+
+    <div id="lista-veiculos">
+        <p></p>
+    </div>
+  
+        
+    </div>
+
+    <script>
+        // Verifica se o usuário está logado
+        if (localStorage.getItem("loggedIn") !== "true") {
+            alert("Você precisa estar logado para acessar esta página.");
+            window.location.href = "login.html"; // Redireciona para a página de login
+        } else {
+            // Exibe o nome do usuário
+            const username = localStorage.getItem("username");
+            document.getElementById("userName").textContent = `Bem-vindo, ${username}!`;
+        }
+
+        // Função para alternar a barra lateral
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mySidebar");
+            sidebar.classList.toggle("expanded");
+        }
+
+        // Função para realizar o logout
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("username");
+            window.location.href = "login.html"; // Redireciona para a página de login após o logout
+        }
+    </script>
+</body>
+
+</html>

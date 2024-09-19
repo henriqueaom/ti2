@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Estacionamento</title>
+    <style>
+        /* Estilização básica para o menu */
+        nav {
+            background-color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            background-color: #e40303;
+        }
+
+        /* Remove o espaço extra no último item à esquerda */
+        .left-menu li:last-child,
+        .right-menu li:last-child {
+            margin-right: 0;
+        }
+
+        .container {
+            background-color: #000;
+            color: white;
+            padding: 20px;
+            width: 80%;
+            margin: 20px auto;
+            /* Centraliza horizontalmente */
+            border-radius: 10px;
+            /* Bordas arredondadas */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Sombra para dar destaque */
+            font-family: 'Arial', sans-serif;
+            /* Altera a fonte para Arial */
+            font-size: 18px;
+            /* Aumenta o tamanho da fonte */
+        }
+
+        body {
+            background-color: #e64b4b;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .contact-info {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        form {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            width: 60%;
+        }
+
+        form label {
+            color: white;
+            font-weight: bold;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        form input[type="submit"] {
+            background-color: #e40303;
+            color: white;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #d0021b;
+        }
+
+        /* Adiciona espaçamento entre o menu e o formulário */
+        nav + form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul class="left-menu">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="pagamento.html">Pagamento</a></li>
+            <li><a href="CadastrarVeiculo.html">Cadastrar Veículo</a></li>
+        </ul>
+        <ul class="right-menu">
+            <li><a href="PaginaDoAministrador.html">ADM</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="Cadastrar.html">Cadastrar</a></li>
+        </ul>
+    </nav>
+
+    <form id="FormVeiculo">
+        <label for="placa">Placa do Veículo:</label><br>
+        <input type="text" id="placa" name="placa" required><br><br>
+
+        <label for="tipo_veiculo">Tipo do Veículo:</label><br>
+        <select id="tipo_veiculo" name="tipo_veiculo" required>
+            <option value="carro">Carro</option>
+            <option value="moto">Moto</option>
+        </select><br><br>
+
+        <input type="submit" value="Cadastrar Veículo">
+    </form>
+
+    <div class="contact-info">
+        <p>Entre em contato: Telefone: (11) 1234-5678 | Email: contato@autoestacionamento.com</p>
+    </div>
+
+    <script>
+        console.log("Script carregado");
+
+        document.getElementById("FormVeiculo").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let placa = document.getElementById("placa").value;
+            let tipo_veiculo = document.getElementById("tipo_veiculo").value;
+
+            fetch("http://localhost:4568/cadastrarveiculo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "placa=" + encodeURIComponent(placa) + "&tipo_veiculo=" + encodeURIComponent(tipo_veiculo)
+            })
+                .then(response => {
+                    console.log("Resposta recebida do servidor:", response);
+                    return response.text();
+                })
+                .then(data => {
+                    console.log("Dados recebidos do servidor:", data);
+                    data = JSON.parse(data);  // Converte a string JSON em um objeto
+                    if (data.status === "success") {
+                        window.alert("Veículo cadastrado com sucesso!");
+                    } else {
+                        window.alert("Falha ao cadastrar veículo.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro ao enviar dados:", error);
+                    alert("Erro ao enviar dados. Verifique a conexão com o servidor.");
+                });
+        });
+    </script>
+</body>
+
+</html>
