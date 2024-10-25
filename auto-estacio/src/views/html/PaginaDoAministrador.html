@@ -1,156 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página do Administrador</title>
-    <style>
-        /* Estilização básica para o menu superior */
-        nav {
-            background-color: #333;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-
-        nav ul li {
-            margin-right: 10px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 14px 20px;
-            display: block;
-        }
-
-        nav ul li a:hover {
-            background-color: #e40303;
-        }
-
-        /* Estilo da barra lateral */
-        .sidebar {
-            height: 100%;
-            width: 60px; /* Largura inicial da sidebar */
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #333;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 20px;
-            z-index: 999;
-            margin-top: 50px; /* Espaço para o menu superior */
-        }
-
-        .sidebar.expanded {
-            width: 250px; /* Largura quando expandida */
-        }
-
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 20px;
-            color: white;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .sidebar .closebtn {
-            position: absolute;
-            top: 10px;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-            display: none;
-        }
-
-        .sidebar.expanded .closebtn {
-            display: block;
-        }
-
-        .sidebar .togglebtn {
-            font-size: 30px;
-            cursor: pointer;
-            color: white;
-            text-align: center;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .sidebar.expanded .togglebtn {
-            display: none;
-        }
-
-        .sidebar .user-info {
-            display: none;
-            margin: 20px 0;
-            font-size: 18px;
-            color: white;
-        }
-
-        .sidebar.expanded .user-info {
-            display: block;
-        }
-
-        .logout-button {
-            padding: 10px 20px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            text-align: left;
-            margin-top: 20px;
-        }
-
-        .logout-button:hover {
-            background-color: #777;
-        }
-
-        /* Estilo do conteúdo principal */
-        .main-content {
-            margin-left: 60px; /* Espaço para a sidebar */
-            padding: 20px;
-            transition: margin-left 0.5s;
-            margin-top: 60px; /* Espaço para o menu superior */
-        }
-
-        .sidebar.expanded + .main-content {
-            margin-left: 250px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/administrador.css">
 </head>
 
 <body>
     <!-- Menu Superior -->
-    <nav>
-        <ul class="left-menu">
-            <li><a href="index.html">Início</a></li>
-            <li><a href="pagamento.html">Pagamento</a></li>
-            <li><a href="CadastrarVeiculo.html">CadastrarVeiculo</a></li>
-        </ul>
-        <ul class="right-menu">
-            <li><a href="PaginaDoAministrador.html">ADM</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="Cadastrar.html">Cadastrar</a></li>
-        </ul>
-    </nav>
+    <header id="header">
+        <nav id="navbar" class="header-element">
+            <ul class="nav-ul">
+                <a href="CadastrarVeiculo.html">
+                    <li class="nav-li">Entrada</li>
+                </a>
+                <a href="pagamento.html">
+                    <li class="nav-li">Pagamento</li>
+                </a>
+                <a href="saida.html">
+                    <li class="nav-li">Saída</li>
+                </a>
+                <a href="Cadastrar.html">
+                    <li class="nav-li">Cadastrar</li>
+                </a>
+                <a href="login.html">
+                    <li class="nav-li">Login</li>
+                </a>
+                <a href="index.html">
+                    <li class="nav-li">Início</li>
+                </a>
+            </ul>
+        </nav>
+    </header>
 
     <!-- Barra Lateral -->
     <div class="sidebar" id="mySidebar">
@@ -164,40 +49,34 @@
 
     <!-- Conteúdo Principal -->
     <div class="main-content">
-        <h1>Bem-vindo à Página do Administrador</h1>
+        <div class="main-container">
+            <h1>Bem-vindo à Página do Administrador</h1>
 
-        <div id="div">
+            <div id="div">
+                <h2>Cadastrar Veículos</h2>
+                <form id="cadastrarveiculo">
+                    <label for="placa">Placa</label>
+                    <input type="text" name="placa" id="placa" required>
+                    <button type="submit">Enviar</button>
+                </form>
 
-        <h2>cadastrar veiculos</h2>
+                <h2>Deletar Veículo</h2>
+                <form id="deletar">
+                    <label for="placa">Placa</label>
+                    <input type="text" name="placa" id="placa" required>
+                    <button type="submit">Enviar</button>
+                </form>
 
+                <h2>Listar Veículos</h2>
+                <form id="listar">
+                    <button type="submit">Listar</button>
+                </form>
+            </div>
+        </div>
 
-        <form id="cadastrarveiculo">
-            <label for="placa">Placa</label>
-            <input type="text" name="placa" id="placa">
-            <button type="submit">enviar</button>
-        </form>
-
-        <h2>Deletar veiculo</h2>
-        </form>
-        <form id="deletar">
-            <label for="placa">Placa</label>
-            <input type="text" name="placa" id="placa">
-            <button type="submit">enviar</button>
-        </form>
-
-
-        <h2>Listar veiculos</h2>
-        <form id="listar">
-            <button type="submit">Listar</button>
-        </form>
-    </div>
-
-
-    <div id="lista-veiculos">
-        <p></p>
-    </div>
-  
-        
+        <div id="lista-veiculos">
+            <p></p>
+        </div>
     </div>
 
     <script>
@@ -216,6 +95,7 @@
             const sidebar = document.getElementById("mySidebar");
             sidebar.classList.toggle("expanded");
         }
+
 
         // Função para realizar o logout
         function logout() {

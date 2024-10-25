@@ -2,21 +2,19 @@ package auto_estacio;
 
 
 
-public class Veiculo {
+public class Saida {
 
   
     private int id;
     private String placa;
     private String tipoVeiculo;
-    private String horarioEntrada;
     private String horarioSaidaPermitida;
     private boolean liberarVeiculo;
 
     // Construtor
-    public Veiculo(String placa, String tipoVeiculo, String horarioEntrada, String horarioSaidaPermitida, boolean liberarVeiculo) {
+    public Saida(String placa, String tipoVeiculo, String horarioSaidaPermitida, boolean liberarVeiculo) {
         this.placa = placa;
         this.tipoVeiculo = tipoVeiculo;
-        this.horarioEntrada = horarioEntrada;
         this.horarioSaidaPermitida = horarioSaidaPermitida;
         this.liberarVeiculo = liberarVeiculo;
     }
@@ -44,14 +42,6 @@ public class Veiculo {
 
     public void setTipoVeiculo(String tipoVeiculo) {
         this.tipoVeiculo = tipoVeiculo;
-    }
-
-    public String getHorarioEntrada() {
-        return horarioEntrada;
-    }
-
-    public void setHorarioEntrada(String horarioEntrada) {
-        this.horarioEntrada = horarioEntrada;
     }
 
     public String getHorarioSaidaPermitida() {

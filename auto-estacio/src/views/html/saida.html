@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Estacio</title>
-    <link rel="stylesheet" href="../css/CadastrarVeiculo.css">
+    <link rel="stylesheet" href="../css/saida.css">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/reset.css">
 </head>
@@ -12,7 +12,7 @@
     <header id="header">
         <nav id="navbar" class="header-element">
             <ul class="nav-ul">
-                <a href="#"><li class="nav-li">Entrada</li></a>
+                <a href="CadastrarVeiculo.html"><li class="nav-li">Entrada</li></a>
                 <a href="pagamento.html"><li class="nav-li">Pagamento</li></a>
                 <a href="saida.html"><li class="nav-li">Saída</li></a>
                 <a href="Cadastrar.html"><li class="nav-li">Cadastrar</li></a>
@@ -24,71 +24,61 @@
 
     <section class="container">
         <div class="form-section">
-            <div class="form-img"></div>
+            <div class="form-img">
+            </div>
+    
             <div class="form-container">
-                <form id="FormVeiculo" action="">
+                <form id="saidaForm">
                     <div class="form-header margin-bottom">
-                        <h1>Entrada do veículo</h1>
+                        <h1>Saída do veículo</h1>
                     </div>
+
                     <div class="inputs">
                         <div class="input-box margin-bottom">
                             <label for="imagem">Imagem da placa:</label>
                             <input type="file" id="imagem" name="imagem" accept="image/*">
                         </div>
+
                         <div class="input-box margin-bottom">
                             <label for="placa">Placa do veículo:</label>
-                            <input type="text" name="placa" id="placa" placeholder="Informe a placa">
+                            <input type="text" name="placa" id="placa" placeholder="Informe a placa" required>
                         </div>
-                        <div class="input-box">
-                            <div class="select">
-                                <label for="tipo_veiculo">Tipo de veículo:</label>
-                            </div>
-                            <div class="select-container">
-                                <select name="tipo_veiculo" id="tipo_veiculo">
-                                    <option value="">Selecione</option>
-                                    <option value="Carro">Carro</option>
-                                    <option value="Moto">Moto</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="time" class="margin-bottom">
-                            <div>Horário corrente: 00:00:00</div>
-                        </div>
+
                         <div class="btn">
-                            <input type="submit" value="Registrar">
+                            <button type="submit">Registrar</button>
                         </div>
                     </div>
+                </form>
+
+                <!-- Div para exibir resultado -->
+                <div id="resultado" style="display:none;">
+                    <h3>Valor calculado:</h3>
+                    <span id="valor-total"></span>
+                </div>
+
+                <!-- Formulário de pagamento (escondido inicialmente) -->
+                <form id="pagamento-form" style="display:none;">
+                    <!-- Campos de pagamento -->
                 </form>
             </div>
         </div>
     </section>
 
     <script>
-        console.log("Script carregado");
+    document.addEventListener("DOMContentLoaded", function () {
+        // Função para calcular o valor
+        document.getElementById("saidaForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Impede o comportamento padrão do formulário
 
-        // Função para atualizar o horário
-        function atualizarHorario() {
-            const agora = new Date();
-            const horas = String(agora.getHours()).padStart(2, '0');
-            const minutos = String(agora.getMinutes()).padStart(2, '0');
-            const segundos = String(agora.getSeconds()).padStart(2, '0');
-            document.getElementById('time').innerHTML = `Horário corrente: ${horas}:${minutos}:${segundos}`;
-        }
-        setInterval(atualizarHorario, 1000);
+            const placa = document.getElementById("placa").value;
+            console.log("Placa capturada:", placa); // Verificando o valor da placa
 
-        // Envio do formulário
-        document.getElementById("FormVeiculo").addEventListener("submit", function (event) {
-            event.preventDefault();
-
-            let placa = document.getElementById("placa").value;
-            let tipo_veiculo = document.getElementById("tipo_veiculo").value;
-
-            fetch("http://localhost:4568/cadastrarveiculo", {
+            fetch("http://localhost:4568/saida", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body: "placa=" + encodeURIComponent(placa) + "&tipo_veiculo=" + encodeURIComponent(tipo_veiculo)
+                body: "placa=" + encodeURIComponent(placa) 
             })
                 .then(response => {
                     console.log("Resposta recebida do servidor:", response);
@@ -98,9 +88,9 @@
                     console.log("Dados recebidos do servidor:", data);
                     data = JSON.parse(data);  // Converte a string JSON em um objeto
                     if (data.status === "success") {
-                        window.alert("Veículo cadastrado com sucesso!");
+                        window.alert("saida liberada");
                     } else {
-                        window.alert("Falha ao cadastrar veículo.");
+                        window.alert("saida não liberada.");
                     }
                 })
                 .catch(error => {
@@ -108,6 +98,7 @@
                     alert("Erro ao enviar dados. Verifique a conexão com o servidor.");
                 });
         });
+    });
     </script>
 </body>
 </html>

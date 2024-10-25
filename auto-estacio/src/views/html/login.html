@@ -5,131 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        /* Estilização básica para o menu */
-        nav {
-            background-color: #333;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-
-        nav ul li {
-            margin-right: 10px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 14px 20px;
-            display: block;
-        }
-
-        nav ul li a:hover {
-            background-color: #e40303;
-        }
-
-        /* Remove o espaço extra no último item à esquerda */
-        .left-menu li:last-child {
-            margin-right: 0;
-        }
-
-        /* Remove o espaço extra no último item à direita */
-        .right-menu li:last-child {
-            margin-right: 0;
-        }
-
-       
-
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            margin: 100px auto;
-            /* Centraliza horizontalmente e adiciona margem superior */
-        }
-
-        .container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-family: 'Georgia', serif;
-            font-size: 24px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #555;
-        }
-
-        .container p {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        .container p a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        .container p a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/Login.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/reset.css">
+ 
 </head>
 
 <body>
 
-    <nav>
-        <ul class="left-menu">
-            <li><a href="index.html">Início</a></li>
-            <li><a href="pagamento.html">pagamento</a></li>
-            <li><a href="CadastrarVeiculo.html">CadastrarVeiculo</a></li>
-        </ul>
-        <ul class="right-menu">
-            <li><a href="PaginaDoAministrador.html">ADM</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="Cadastrar.html">Cadastrar</a></li>
-        </ul>
-    </nav>
+    <header id="header">
+        <nav id="navbar" class="header-element">
+            <ul class="nav-ul">
+                <a href="CadastrarVeiculo.html"><li class="nav-li">Entrada</li></a>
+                <a href="pagamento.html"><li class="nav-li">Pagamento</li></a>
+                <a href="saida.html"><li class="nav-li">Saída</li></a>
+                <a href="Cadastrar.html"><li class="nav-li">Cadastrar</li></a>
+                <a href="login.html"><li class="nav-li">Login</li></a>
+                <a href="index.html"><li class="nav-li">Inicio</li></a>
+            </ul>
+        </nav>
+    </header>
 
     <div class="container">
         <h2>Login</h2>

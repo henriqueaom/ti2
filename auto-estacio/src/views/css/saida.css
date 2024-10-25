@@ -1,0 +1,140 @@
+/* RESETS */
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
+}
+
+/* inicio body */
+
+.container {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6ee7b7;
+}
+
+.form-section {
+    height: 70%;
+    background-color: #ffffff00;
+    display: flex;
+    width: 1000px;
+}
+
+.form-header h1::after {
+    content: '';
+    display: block;
+    width: 5rem;
+    height: 0.3rem;
+    background-color: #065f46;
+    margin: 0 auto;
+    position: absolute;
+    border-radius: 5px;
+}
+
+.form-img {
+    background-image: url("../img/carpark1000.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: auto;
+    width: 50%;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.form-container {
+    width: 50%;
+    background-color: rgb(221, 221, 221);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.margin-bottom {
+    margin-bottom: 1rem;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+.inputs div{
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box input {
+    margin: 0.6rem 0;
+    padding: 10px;
+    border: 1px solid #ffffff ;
+    border-radius: 0px;
+}
+
+.select-container  {
+    display: flex;
+    position: relative;
+    justify-content: center;
+}
+
+.select-container select {
+    border: none;
+    appearance: none;
+    outline: unset;
+    padding: 10px;
+    width: 100%;
+    color: white;
+    background-color: #3b82f6;
+    margin-bottom: 2rem;
+}
+
+.select-container .icon-container {
+    height: 100px;
+    width: 50px;
+    position: absolute;
+    right: 0;
+}
+
+.input-box option {
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
+}
+
+
+.btn {
+    display: flex;
+    align-items: center;
+}
+
+.btn button {
+    width: 80%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border: none;
+    background-color:#059669;
+    color: white;
+    border-radius: 5px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.btn button:hover {
+    background-color: #065f46;
+}
+
+

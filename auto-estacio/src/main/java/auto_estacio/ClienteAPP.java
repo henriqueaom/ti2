@@ -7,7 +7,10 @@ public class ClienteAPP {
         port(4568);
 
         ClienteService clienteService = new ClienteService();
-        VeiculoService veiculoService = new VeiculoService();
+        Veiculo2Service veiculo2Service = new Veiculo2Service();
+        TicketService ticketService = new TicketService();
+        SaidaService saidaService = new SaidaService();
+        
 
         // Configurar CORS
         before((request, response) -> {
@@ -40,29 +43,39 @@ public class ClienteAPP {
         post("/cadastrarveiculo", (request, response) -> {
             System.out.println("Recebida requisição de cadastro de veículo");
             response.type("application/json");
-            
-            String resultado = veiculoService.cadastrarVeiculo(request, response);
-            
-            if (resultado.equals("success")) {
+        
+            String resultadoVeiculo = veiculo2Service.cadastrarVeiculo(request, response);
+            String resultadoTicket = ticketService.cadastrarTicket(request, response);
+        
+            if (resultadoVeiculo.equals("success") && resultadoTicket.equals("success")) {
                 return "{\"status\": \"success\"}";
+            } else if (!resultadoVeiculo.equals("success")) {
+                return "{\"status\": \"error\", \"message\": \"Erro ao cadastrar veículo: " + resultadoVeiculo + "\"}";
             } else {
-                return "{\"status\": \"error\", \"message\": \"" + resultado + "\"}";
+                return "{\"status\": \"error\", \"message\": \"Erro ao cadastrar ticket: " + resultadoTicket + "\"}";
             }
         });
-
-        
-        post("/calcularValor", (request, response) -> {
+         
+        post("/calcularvalor", (request, response) -> {
             System.out.println("Recebida requisição de cálculo");
+            String placa = request.queryParams("placa");
+            System.out.println("Placa recebida: " + placa); // Adicione esta linha para verificar a placa recebida
             response.type("application/json");
             
-            return veiculoService.calcularValor(request, response);
+            return ticketService.calcularValor(request, response);
         });
-
         post("/pagamento", (request, response) -> {
             System.out.println("Recebida requisição de pagamento");
             response.type("application/json");
             
-            return veiculoService.pagamento(request, response);
+            return ticketService.pagamento(request, response);
+        });
+
+        post("/saida", (request, response) -> {
+            System.out.println("Recebida requisição de saida");
+            response.type("application/json");
+            
+            return saidaService.saida(request, response);
         });
         
 
