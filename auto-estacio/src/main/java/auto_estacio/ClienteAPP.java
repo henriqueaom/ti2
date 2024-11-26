@@ -77,6 +77,47 @@ public class ClienteAPP {
             
             return saidaService.saida(request, response);
         });
+
+        post("/processarImagem", (request, response) -> {
+            System.out.println("Recebendo requisição para processar imagem...");
+            response.type("application/json");
+        
+            try {
+                String imagemBase64 = request.body(); // Pega o corpo JSON inteiro
+                System.out.println("Imagem Base64 recebida: " + (imagemBase64 != null ? imagemBase64.substring(0, 30) : "NULO"));
+        
+                if (imagemBase64 == null || imagemBase64.isEmpty()) {
+                    return "{\"status\": \"error\", \"message\": \"Imagem não enviada.\"}";
+                }
+                System.out.println("vai retornar a service");
+                return veiculo2Service.processarImagem(request, response); // Chama o serviço
+            } catch (Exception e) {
+                System.err.println("Erro ao processar imagem: " + e.getMessage());
+                e.printStackTrace();
+                return "{\"status\": \"error\", \"message\": \"Erro interno no servidor.\"}";
+            }
+        });
+
+        post("/saidaimagem", (request, response) -> {
+            System.out.println("Recebendo requisição para processar imagem...");
+            response.type("application/json");
+        
+            try {
+                String imagemBase64 = request.body(); // Pega o corpo JSON inteiro
+                System.out.println("Imagem Base64 recebida: " + (imagemBase64 != null ? imagemBase64.substring(0, 30) : "NULO"));
+        
+                if (imagemBase64 == null || imagemBase64.isEmpty()) {
+                    return "{\"status\": \"error\", \"message\": \"Imagem não enviada.\"}";
+                }
+                System.out.println("vai retornar a service");
+                return saidaService.processarImagem(request, response); // Chama o serviço
+            } catch (Exception e) {
+                System.err.println("Erro ao processar imagem: " + e.getMessage());
+                e.printStackTrace();
+                return "{\"status\": \"error\", \"message\": \"Erro interno no servidor.\"}";
+            }
+        });
+        
         
 
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/reset.css">
 </head>
+
 <body>
     <header id="header">
         <nav id="navbar" class="header-element">
@@ -24,81 +26,110 @@
 
     <section class="container">
         <div class="form-section">
-            <div class="form-img">
-            </div>
-    
+            <div class="form-img"></div>
             <div class="form-container">
                 <form id="saidaForm">
                     <div class="form-header margin-bottom">
                         <h1>Saída do veículo</h1>
                     </div>
-
                     <div class="inputs">
                         <div class="input-box margin-bottom">
                             <label for="imagem">Imagem da placa:</label>
                             <input type="file" id="imagem" name="imagem" accept="image/*">
                         </div>
-
                         <div class="input-box margin-bottom">
                             <label for="placa">Placa do veículo:</label>
-                            <input type="text" name="placa" id="placa" placeholder="Informe a placa" required>
+                            <input type="text" name="placa" id="placa" placeholder="Informe a placa">
                         </div>
-
                         <div class="btn">
                             <button type="submit">Registrar</button>
                         </div>
                     </div>
-                </form>
-
-                <!-- Div para exibir resultado -->
-                <div id="resultado" style="display:none;">
-                    <h3>Valor calculado:</h3>
-                    <span id="valor-total"></span>
-                </div>
-
-                <!-- Formulário de pagamento (escondido inicialmente) -->
-                <form id="pagamento-form" style="display:none;">
-                    <!-- Campos de pagamento -->
                 </form>
             </div>
         </div>
     </section>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Função para calcular o valor
-        document.getElementById("saidaForm").addEventListener("submit", function (event) {
-            event.preventDefault(); // Impede o comportamento padrão do formulário
+        // Função para converter imagem em Base64
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result.split(",")[1]);
+                reader.onerror = error => reject(error);
+            });
+        }
 
-            const placa = document.getElementById("placa").value;
-            console.log("Placa capturada:", placa); // Verificando o valor da placa
+        // Envio do formulário
+        document.getElementById("saidaForm").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Impede o envio padrão
 
+            let placa = document.getElementById("placa").value;
+            let imagemInput = document.getElementById("imagem").files[0];
+
+            if (imagemInput) {
+                try {
+                    // Converte a imagem para Base64
+                    let imagemBase64 = await toBase64(imagemInput);
+                    console.log("Imagem convertida para Base64:", imagemBase64);
+
+                    // Envia para o endpoint de OCR
+                    await fetch("http://localhost:4568/saidaimagem", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ imagem: imagemBase64 })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Resposta recebida da API:", data);
+                            if (data.status === "success") {
+                                placa = data.placa;
+                                console.log("Placa reconhecida:", placa);
+                                registrarSaida(placa); // Chama o método com a placa
+                            } else {
+                                alert("Erro ao reconhecer a placa.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Erro ao processar imagem:", error);
+                            alert("Erro ao processar imagem.");
+                        });
+
+                } catch (error) {
+                    console.error("Erro ao converter imagem:", error);
+                    alert("Erro ao converter imagem.");
+                }
+            } else {
+                registrarSaida(placa); // Envia diretamente se não houver imagem
+            }
+        });
+
+        // Função para registrar a saída do veículo
+        function registrarSaida(placa) {
             fetch("http://localhost:4568/saida", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body: "placa=" + encodeURIComponent(placa) 
+                body: "placa=" + encodeURIComponent(placa)
             })
-                .then(response => {
-                    console.log("Resposta recebida do servidor:", response);
-                    return response.text();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log("Dados recebidos do servidor:", data);
-                    data = JSON.parse(data);  // Converte a string JSON em um objeto
                     if (data.status === "success") {
-                        window.alert("saida liberada");
+                        alert("Saída registrada com sucesso!");
                     } else {
-                        window.alert("saida não liberada.");
+                        alert("Falha ao registrar a saída.");
                     }
                 })
                 .catch(error => {
-                    console.error("Erro ao enviar dados:", error);
-                    alert("Erro ao enviar dados. Verifique a conexão com o servidor.");
+                    console.error("Erro ao registrar saída:", error);
+                    alert("Erro ao registrar a saída. Verifique a conexão com o servidor.");
                 });
-        });
-    });
+        }
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,16 +9,29 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/reset.css">
 </head>
+
 <body>
     <header id="header">
         <nav id="navbar" class="header-element">
             <ul class="nav-ul">
-                <a href="#"><li class="nav-li">Entrada</li></a>
-                <a href="pagamento.html"><li class="nav-li">Pagamento</li></a>
-                <a href="saida.html"><li class="nav-li">Saída</li></a>
-                <a href="Cadastrar.html"><li class="nav-li">Cadastrar</li></a>
-                <a href="login.html"><li class="nav-li">Login</li></a>
-                <a href="index.html"><li class="nav-li">Inicio</li></a>
+                <a href="#">
+                    <li class="nav-li">Entrada</li>
+                </a>
+                <a href="pagamento.html">
+                    <li class="nav-li">Pagamento</li>
+                </a>
+                <a href="saida.html">
+                    <li class="nav-li">Saída</li>
+                </a>
+                <a href="Cadastrar.html">
+                    <li class="nav-li">Cadastrar</li>
+                </a>
+                <a href="login.html">
+                    <li class="nav-li">Login</li>
+                </a>
+                <a href="index.html">
+                    <li class="nav-li">Inicio</li>
+                </a>
             </ul>
         </nav>
     </header>
@@ -76,13 +90,70 @@
         }
         setInterval(atualizarHorario, 1000);
 
+        // Função para converter a imagem para Base64
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result.split(",")[1]);
+                reader.onerror = error => reject(error);
+            });
+        }
+
         // Envio do formulário
-        document.getElementById("FormVeiculo").addEventListener("submit", function (event) {
+        document.getElementById("FormVeiculo").addEventListener("submit", async function (event) {
             event.preventDefault();
 
             let placa = document.getElementById("placa").value;
             let tipo_veiculo = document.getElementById("tipo_veiculo").value;
+            let imagemInput = document.getElementById("imagem").files[0];
 
+            if (imagemInput) {
+                // Converte a imagem para Base64 e envia para a API de OCR
+                try {
+                    let imagemBase64 = await toBase64(imagemInput);
+                    console.log("chamando o endpoint");
+
+                    // Realizando o fetch para processar a imagem
+                    await fetch("http://localhost:4568/processarImagem", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ imagem: imagemBase64 })
+                    })
+                        .then(response => response.json())  // Converter a resposta para JSON
+                        .then(data => {
+                            console.log("Resposta recebida:", data);
+                            if (data.status == "success") {
+                                if (data.ticket == "success" ||data.ticket == "success"  ) {
+                                    alert("veiculo cadastrado com sucesso")
+                                }else {
+                                   alert("erro ao cadastrar veiculo")
+                                }
+                                placa = data.placa;
+                                console.log("Placa reconhecida:", placa);
+                            } else {
+                                console.error("Falha ao reconhecer a placa.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Erro na resposta da API:", error);
+                            alert("Erro ao processar imagemmm.");
+                        });
+
+                } catch (error) {
+                    console.error("Erro ao converter imagem:", error);
+                    alert("Erro ao converter imagem.");
+                }
+            } else {
+                // Chama o método existente sem imagem
+                registrarVeiculo(placa, tipo_veiculo);
+            }
+        });
+
+
+        function registrarVeiculo(placa, tipo_veiculo) {
             fetch("http://localhost:4568/cadastrarveiculo", {
                 method: "POST",
                 headers: {
@@ -90,13 +161,8 @@
                 },
                 body: "placa=" + encodeURIComponent(placa) + "&tipo_veiculo=" + encodeURIComponent(tipo_veiculo)
             })
-                .then(response => {
-                    console.log("Resposta recebida do servidor:", response);
-                    return response.text();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log("Dados recebidos do servidor:", data);
-                    data = JSON.parse(data);  // Converte a string JSON em um objeto
                     if (data.status === "success") {
                         window.alert("Veículo cadastrado com sucesso!");
                     } else {
@@ -107,7 +173,9 @@
                     console.error("Erro ao enviar dados:", error);
                     alert("Erro ao enviar dados. Verifique a conexão com o servidor.");
                 });
-        });
+        }
     </script>
+
 </body>
+
 </html>

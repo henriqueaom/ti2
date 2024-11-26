@@ -1,4 +1,7 @@
-auto_estacio\Clientes.class
+auto_estacio\Saida.class
+auto_estacio\Ticket.class
+auto_estacio\TicketDAO.class
 auto_estacio\ClienteDAO.class
 auto_estacio\ClienteAPP.class
-auto_estacio\ClienteService.class
+auto_estacio\Veiculo2DAO.class
+auto_estacio\AzureOCRExample.class
