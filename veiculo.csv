@@ -1,0 +1,6 @@
+Table,"Create Table"
+veiculo,"CREATE TABLE `veiculo` (
+  `placa` varchar(10) NOT NULL,
+  `tipo_veiculo` enum('carro','moto') NOT NULL,
+  PRIMARY KEY (`placa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"

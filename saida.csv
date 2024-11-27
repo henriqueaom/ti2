@@ -1,0 +1,8 @@
+Table,"Create Table"
+saida,"CREATE TABLE `saida` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `placa` varchar(10) NOT NULL,
+  `data_saida_permitida` datetime DEFAULT NULL,
+  `saida_autorizada` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) 

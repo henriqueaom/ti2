@@ -23,11 +23,12 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.33</version>
-    </dependency>
+   <dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.7.4</version>
+</dependency>
+
 
     <dependency>
       <groupId>com.sparkjava</groupId>
@@ -53,11 +54,13 @@
         <artifactId>okhttp</artifactId>
         <version>4.9.3</version>
     </dependency>
-    <dependency>
-        <groupId>org.json</groupId>
-        <artifactId>json</artifactId>
-        <version>20210307</version>
-    </dependency>
+ <!-- https://mvnrepository.com/artifact/org.json/json -->
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20240303</version>
+</dependency>
+
     <dependency>
     <groupId>com.google.code.gson</groupId>
     <artifactId>gson</artifactId>

@@ -26,12 +26,13 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-
+<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version> <!-- Verifique a versão mais recente -->
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.7.4</version>
 </dependency>
+
 
 
 

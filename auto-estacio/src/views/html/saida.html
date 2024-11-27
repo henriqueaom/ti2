@@ -119,9 +119,9 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === "success") {
-                        alert("Saída registrada com sucesso!");
+                        alert("Veiculo liberado");
                     } else {
-                        alert("Falha ao registrar a saída.");
+                        alert("Veiculo não liberado");
                     }
                 })
                 .catch(error => {

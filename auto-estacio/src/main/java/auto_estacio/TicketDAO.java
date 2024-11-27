@@ -9,36 +9,34 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public class TicketDAO{
+public class TicketDAO {
     private Connection conexao;
 
     public TicketDAO() {
         conexao = null;
     }
-
     public String conectar() {
-        // Driver JDBC do MySQL
-        String driverName = "com.mysql.cj.jdbc.Driver";
+        // Driver JDBC do PostgreSQL
+        String driverName = "org.postgresql.Driver";
         String serverName = "localhost";
         String databaseName = "auto_estacio";
-        int porta = 3306;
-        String url = "jdbc:mysql://" + serverName + ":" + porta + "/" + databaseName;
+        int porta = 5432; // Porta padrão do PostgreSQL
+        String url = "jdbc:postgresql://" + serverName + ":" + porta + "/" + databaseName;
 
         // Adicionando credenciais para conexão
-        String user = "root";
-        String password = "ti2cc";
+        String user = "postgres"; // usuário do PostgreSQL
+        String password = "ti2cc"; // senha do PostgreSQL
 
         try {
             Class.forName(driverName);
             conexao = DriverManager.getConnection(url, user, password); // Conexão está agora aberta
-            return "Conectado com sucesso ao banco de dados MySQL";
+            return "Conectado com sucesso ao banco de dados PostgreSQL";
         } catch (ClassNotFoundException e) {
             return "Driver JDBC não encontrado: " + e.getMessage();
         } catch (SQLException e) {
             return "Erro ao conectar ao banco de dados: " + e.getMessage();
         }
     }
-
     public String cadastrarTicket(String placa, String tipo) {
         System.out.println("Conectando ao banco de dados...");
         if (conexao == null) {
@@ -48,15 +46,15 @@ public class TicketDAO{
                 return "Erro de conexão: " + status;
             }
         }
-    
+
         System.out.println("Placa recebida: " + placa + ", Tipo: " + tipo);
-    
+
         String sql = "INSERT INTO ticket (placa, tipo_veiculo) VALUES (?, ?)";
-    
+
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, placa);
             stmt.setString(2, tipo);
-    
+
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("ticket cadastrado com sucesso!");
@@ -65,7 +63,7 @@ public class TicketDAO{
                 System.err.println("Erro ao cadastrar ticket.");
                 return "Erro ao cadastrar ticket.";
             }
-    
+
         } catch (SQLException e) {
             e.printStackTrace();
             return "Erro de SQL: " + e.getMessage();
@@ -82,39 +80,40 @@ public class TicketDAO{
                 return 0;
             }
         }
-
-        String sql = "SELECT tipo_veiculo, data_entrada FROM ticket WHERE placa = ?";
+    
+        String sql = "SELECT t.tipo_veiculo, t.data_entrada, tar.preco " +
+                "FROM ticket t " +
+                "JOIN tarifa tar ON t.tipo_veiculo = tar.tipo " +
+                "WHERE t.placa = ?";
         int valor = 0;
-
+    
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, placa);
             ResultSet rs = stmt.executeQuery();
-
+    
             if (rs.next()) {
-                String tipo = rs.getString("tipo_veiculo");
+                //String tipo = rs.getString("tipo_veiculo");
                 Timestamp horarioEntrada = rs.getTimestamp("data_entrada");
-              
-
+                float tarifa = rs.getFloat("preco");
+    
                 LocalDateTime agora = LocalDateTime.now();
                 long minutos = ChronoUnit.MINUTES.between(horarioEntrada.toLocalDateTime(), agora);
-
-                if (tipo.equals("carro")) {
-                    valor += ((int) (minutos / 15) * 10) + 10; // R$10 por 15 minutos
-                    
-                } else if (tipo.equals("moto")) {
-                    valor += ((int) (minutos / 15) * 5) + 5; // R$5 por 15 minutos
-                 
-                }
+    
+                // Calcula o valor total baseado no tempo e tarifa
+                int intervalos = (int) (minutos / 15); // quantidade de intervalos de 15 minutos
+                valor += intervalos * tarifa; // Aplica a tarifa para cada intervalo de 15 minutos
+    
             } else {
                 System.err.println("Placa não encontrada: " + placa);
             }
-
+    
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+    
         return valor;
     }
+    
 
     public String pagamento(String placa) {
         int preco = calcularValor(placa);
@@ -150,6 +149,5 @@ public class TicketDAO{
 
         return resultado;
     }
-
 
 }

@@ -15,21 +15,21 @@ public class Veiculo2DAO {
     }
 
     public String conectar() {
-        // Driver JDBC do MySQL
-        String driverName = "com.mysql.cj.jdbc.Driver";
+        // Driver JDBC do PostgreSQL
+        String driverName = "org.postgresql.Driver";
         String serverName = "localhost";
         String databaseName = "auto_estacio";
-        int porta = 3306;
-        String url = "jdbc:mysql://" + serverName + ":" + porta + "/" + databaseName;
+        int porta = 5432; // Porta padrão do PostgreSQL
+        String url = "jdbc:postgresql://" + serverName + ":" + porta + "/" + databaseName;
 
         // Adicionando credenciais para conexão
-        String user = "root";
-        String password = "ti2cc";
+        String user = "postgres"; // usuário do PostgreSQL
+        String password = "ti2cc"; // senha do PostgreSQL
 
         try {
             Class.forName(driverName);
             conexao = DriverManager.getConnection(url, user, password); // Conexão está agora aberta
-            return "Conectado com sucesso ao banco de dados MySQL";
+            return "Conectado com sucesso ao banco de dados PostgreSQL";
         } catch (ClassNotFoundException e) {
             return "Driver JDBC não encontrado: " + e.getMessage();
         } catch (SQLException e) {

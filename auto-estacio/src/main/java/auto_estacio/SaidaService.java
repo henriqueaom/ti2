@@ -14,7 +14,7 @@ public class SaidaService {
         String placa = request.queryParams("placa");
     
         String resultado = saidaDAO.liberarVeiculo(placa);
-        if (resultado.equals("ERRO DE PAGAMENTO.")) {
+        if (resultado.equals("Erro: Placa não encontrada ou veículo não está liberado.")) {
             return "{\"status\": \"error\", \"message\": \"Erro ao processar pagamento\"}";
         } else {
             return "{\"status\": \"success\", \"message\": \"" + resultado + "\"}";
@@ -25,7 +25,7 @@ public class SaidaService {
 
 
 public String processarImagem(Request request, Response response) {
-    String tipo = "carro";
+ 
     try {
         // Recupera o corpo da requisição (JSON) com a imagem Base64
         String body = request.body();  // Obtém o corpo completo
