@@ -42,7 +42,7 @@ public class TicketDAO {
         if (conexao == null) {
             String status = conectar();
             System.out.println(status);
-            if (!status.equals("Conectado com sucesso ao banco de dados MySQL")) {
+            if (!status.equals("Conectado com sucesso ao banco de dados PostgreSQL")) {
                 return "Erro de conexão: " + status;
             }
         }
@@ -75,7 +75,7 @@ public class TicketDAO {
         System.out.println("placa no dao = " + placa);
         if (conexao == null) {
             String status = conectar();
-            if (!status.equals("Conectado com sucesso ao banco de dados MySQL")) {
+            if (!status.equals("Conectado com sucesso ao banco de dados PostgreSQL")) {
                 System.err.println(status);
                 return 0;
             }
@@ -100,8 +100,8 @@ public class TicketDAO {
                 long minutos = ChronoUnit.MINUTES.between(horarioEntrada.toLocalDateTime(), agora);
     
                 // Calcula o valor total baseado no tempo e tarifa
-                int intervalos = (int) (minutos / 15); // quantidade de intervalos de 15 minutos
-                valor += intervalos * tarifa; // Aplica a tarifa para cada intervalo de 15 minutos
+                int intervalos = (int) (minutos / 15) ; // quantidade de intervalos de 15 minutos
+                valor += (intervalos * tarifa) + 10; // Aplica a tarifa para cada intervalo de 15 minutos
     
             } else {
                 System.err.println("Placa não encontrada: " + placa);
@@ -119,7 +119,7 @@ public class TicketDAO {
         int preco = calcularValor(placa);
         if (conexao == null) {
             String status = conectar();
-            if (!status.equals("Conectado com sucesso ao banco de dados MySQL")) {
+            if (!status.equals("Conectado com sucesso ao banco de dados PostgreSQL")) {
                 System.err.println(status);
                 return "Erro ao conectar ao banco de dados.";
             }

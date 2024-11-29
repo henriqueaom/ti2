@@ -59,7 +59,7 @@ public class ClienteAPP {
         post("/calcularvalor", (request, response) -> {
             System.out.println("Recebida requisição de cálculo");
             String placa = request.queryParams("placa");
-            System.out.println("Placa recebida: " + placa); // Adicione esta linha para verificar a placa recebida
+            System.out.println("Placa recebida: " + placa); //  linha para verificar a placa recebida
             response.type("application/json");
             
             return ticketService.calcularValor(request, response);

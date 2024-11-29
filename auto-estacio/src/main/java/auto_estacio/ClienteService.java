@@ -12,8 +12,7 @@ public class ClienteService {
         String telefone = request.queryParams("telefone");
         String senha = request.queryParams("senha");
 
-
-        if(!clienteDAO.cadastrar(nome, email, telefone, senha)){
+        if (!clienteDAO.cadastrar(nome, email, telefone, senha)) {
             return false;
 
         }

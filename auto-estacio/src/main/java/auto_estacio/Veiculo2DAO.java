@@ -42,7 +42,7 @@ public class Veiculo2DAO {
         if (conexao == null) {
             String status = conectar();
             System.out.println(status);
-            if (!status.equals("Conectado com sucesso ao banco de dados MySQL")) {
+            if (!status.equals("Conectado com sucesso ao banco de dados PostgreSQL")) {
                 return "Erro de conexão: " + status;
             }
         }

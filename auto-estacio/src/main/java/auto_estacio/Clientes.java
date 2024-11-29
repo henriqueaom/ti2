@@ -8,11 +8,9 @@ public class Clientes {
     String telefone;
     String senha;
 
-    // Construtor sem argumentos (padrão)
     public Clientes() {
     }
 
-    // Construtor com todos os campos
     public Clientes(int id, String nome, String email, String telefone, String senha) {
         this.id = id;
         this.nome = nome;

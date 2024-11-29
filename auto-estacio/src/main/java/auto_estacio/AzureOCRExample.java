@@ -54,7 +54,6 @@ public class AzureOCRExample {
                 Thread.currentThread().interrupt(); // Restaura o estado de interrupção
                 System.err.println("Erro durante o delay: " + e.getMessage());
             }
-            
 
             return obterResultado(operationLocation);
         } else {
@@ -87,12 +86,12 @@ public class AzureOCRExample {
             if ("succeeded".equals(status)) {
                 System.out.println("texto retornado = ");
                 return json.getJSONObject("analyzeResult")
-                           .getJSONArray("readResults")
-                           .getJSONObject(0)
-                           .getJSONArray("lines")
-                           .getJSONObject(0)
-                           .getString("text");
-                           
+                        .getJSONArray("readResults")
+                        .getJSONObject(0)
+                        .getJSONArray("lines")
+                        .getJSONObject(0)
+                        .getString("text");
+
             }
 
             // Aguarda antes de repetir

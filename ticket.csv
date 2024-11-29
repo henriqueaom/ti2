@@ -1,8 +1,0 @@
-Table,"Create Table"
-ticket,"CREATE TABLE `ticket` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `placa` varchar(10) NOT NULL,
-  `tipo_veiculo` enum('carro','moto') NOT NULL,
-  `data_entrada` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"

@@ -9,8 +9,9 @@ public class TicketService {
     public String cadastrarTicket(Request request, Response response) {
         String placa = request.queryParams("placa");
         String tipo = request.queryParams("tipo_veiculo");
-
+       
         String resultado = ticketDAO.cadastrarTicket(placa, tipo);
+        System.out.println("PLACA NA SERVICE TI9CKEIT " + resultado);
         return resultado;
     }
 

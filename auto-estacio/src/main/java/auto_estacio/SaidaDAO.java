@@ -22,7 +22,7 @@ public class SaidaDAO {
         int porta = 5432; // Porta padrão do PostgreSQL
         String url = "jdbc:postgresql://" + serverName + ":" + porta + "/" + databaseName;
 
-        // Adicionando credenciais para conexão
+        //  credenciais para conexão
         String user = "postgres"; // usuário do PostgreSQL
         String password = "ti2cc"; // senha do PostgreSQL
 
@@ -42,7 +42,7 @@ public class SaidaDAO {
         if (conexao == null) {
             String status = conectar();
             System.out.println(status);
-            if (!status.equals("Conectado com sucesso ao banco de dados MySQL")) {
+            if (!status.equals("Conectado com sucesso ao banco de dados PostgreSQL")) {
                 return "Erro de conexão: " + status;
             }
         }
