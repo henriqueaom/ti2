@@ -7,7 +7,7 @@ import auto_estacio.Service.SaidaService;
 import auto_estacio.Service.TicketService;
 import auto_estacio.Service.Veiculo2Service;
 
-public class ClienteAPP {
+public class MainAPP {
     public static void main(String[] args) {
         port(4568);
 
