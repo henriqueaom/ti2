@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ClienteAPP",
+            "request": "launch",
+            "mainClass": "auto_estacio.APP.ClienteAPP",
+            "projectName": "ex2"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

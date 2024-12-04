@@ -72,8 +72,7 @@
                 try {
                     // Converte a imagem para Base64
                     let imagemBase64 = await toBase64(imagemInput);
-                    console.log("Imagem convertida para Base64:", imagemBase64);
-
+    
                     // Envia para o endpoint de OCR
                     await fetch("http://localhost:4568/saidaimagem", {
                         method: "POST",
